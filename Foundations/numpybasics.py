@@ -23,11 +23,31 @@ import numpy as np
 
 #Transpose
 # Transposing
-x = np.array([[1,2,3], [4,5,6]])
-print ("x:\n", x)
-print ("x.shape: ", x.shape)
-y = np.transpose(x, (1,0)) # flip dimensions at index 0 and 1
-print ("y:\n", y)
-print ("y.shape: ", y.shape)
-
+# x = np.array([[1,2,3], [4,5,6]])
+# print ("x:\n", x)
+# print ("x.shape: ", x.shape)
+# y = np.transpose(x, (1,0)) # flip dimensions at index 0 and 1
+# print ("y:\n", y)
+# print ("y.shape: ", y.shape)
 #More Topics include REshaping , joining and expanding/squeezing dimensions
+
+# x = np.array((1,2,3))
+# y = np.array([1,2,3])
+
+# print(x.shape, type(x))
+ 
+# x1 = x.reshape(-1,1)
+# print(x1.shape)
+# print(x1)
+# x2 = x.reshape(1,-1)
+# print(x2.shape)
+# print(x2)
+
+# print(y.shape, type(y))
+# Reshaping
+x = np.array([[1,2,3,4,5,6]])
+y = np.array([1,2,3,4,5,6])
+print(x), print(x.shape)
+print(y) , print(y.shape)
+
+
