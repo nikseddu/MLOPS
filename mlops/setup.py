@@ -8,7 +8,6 @@ with open(Path(BASE_DIR,"requirements.txt"),"r") as file:
     required_packages = [  line.strip()   for line in file.readlines()  ] 
 
 
-
 #setup
 
 setup(
