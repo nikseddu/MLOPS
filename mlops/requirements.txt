@@ -1,0 +1,4 @@
+# Add to requirements.txt
+numpy==1.19.5
+pandas==1.3.5
+pretty-errors==1.2.19
