@@ -9,6 +9,8 @@ from config import config
 
 from tagifai import data, train, utils
 
+
+
 warnings.filterwarnings("ignore")
 
 def elt_data():
@@ -41,7 +43,31 @@ def train_model(args_fp):
     print(json.dumps(performance, indent=2))
 
 
+# tagifai/main.py
+import mlflow
+from numpyencoder import NumpyEncoder
+import optuna
+from optuna.integration.mlflow import MLflowCallback
 
-if __name__ == "__main__":
-    args_fp = Path(config.CONFIG_DIR, "args.json")
-    train_model(args_fp)
+def optimize(study_name, num_trials):
+    """Optimize hyperparameters."""
+    # Load labeled data
+    df = pd.read_csv(Path(config.DATA_DIR, "labeled_projects.csv"))
+
+    # Optimize
+    args = Namespace(**utils.load_dict(filepath=args_fp))
+    pruner = optuna.pruners.MedianPruner(n_startup_trials=5, n_warmup_steps=5)
+    study = optuna.create_study(study_name="optimization", direction="maximize", pruner=pruner)
+    mlflow_callback = MLflowCallback(
+        tracking_uri=mlflow.get_tracking_uri(), metric_name="f1")
+    study.optimize(
+        lambda trial: train.objective(args, df, trial),
+        n_trials=num_trials,
+        callbacks=[mlflow_callback])
+
+    # Best trial
+    trials_df = study.trials_dataframe()
+    trials_df = trials_df.sort_values(["user_attrs_f1"], ascending=False)
+    utils.save_dict({**args.__dict__, **study.best_trial.params}, args_fp, cls=NumpyEncoder)
+    print(f"\nBest value (f1): {study.best_trial.value}")
+    print(f"Best hyperparameters: {json.dumps(study.best_trial.params, indent=2)}")

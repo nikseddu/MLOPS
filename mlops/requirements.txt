@@ -6,3 +6,6 @@ nltk==3.7
 scikit-learn==0.24.2
 imbalanced-learn==0.8.1
 snorkel==0.9.8
+mlflow==1.23.1
+numpyencoder==0.3.0
+optuna==2.10.0

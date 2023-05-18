@@ -20,3 +20,9 @@ STOPWORDS = [   "i",
     "wouldn't"]
 
 
+# config/config.py
+import mlflow
+STORES_DIR = Path(BASE_DIR, "stores")
+MODEL_REGISTRY = Path(STORES_DIR, "model")
+MODEL_REGISTRY.mkdir(parents=True, exist_ok=True)
+mlflow.set_tracking_uri("file://" + str(MODEL_REGISTRY.absolute()))
