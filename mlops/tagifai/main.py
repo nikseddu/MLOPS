@@ -43,6 +43,6 @@ def train_model(args_fp):
 
 
 
-# if __name__ == "__main__":
-#     args_fp = Path(config.CONFIG_DIR, "args.json")
-#     train_model(args_fp)
+if __name__ == "__main__":
+    args_fp = Path(config.CONFIG_DIR, "args.json")
+    train_model(args_fp)
