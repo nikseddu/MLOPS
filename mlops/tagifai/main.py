@@ -8,6 +8,8 @@ from config import config
 # import utils
 
 from tagifai import data, train, utils
+import joblib
+import tempfile
 
 
 
@@ -31,13 +33,41 @@ def elt_data():
 # tagifai/main.py
 import json
 
-def train_model(args_fp):
+def train_model(args_fp,experiment_name, run_name):
     """Train a model given arguments."""
     # Load labeled data
     df = pd.read_csv(Path(config.DATA_DIR, "labeled_projects.csv"))
 
     # Train
     args = Namespace(**utils.load_dict(filepath=args_fp))
+    mlflow.set_experiment(experiment_name=experiment_name)
+    with mlflow.start_run(run_name=run_name):
+        run_id = mlflow.active_run().info.run_id
+        print(f"Run ID: {run_id}")
+        artifacts = train.train(df=df, args=args)
+        performance = artifacts["performance"]
+        print(json.dumps(performance, indent=2))
+
+        # Log metrics and parameters
+        performance = artifacts["performance"]
+        mlflow.log_metrics({"precision": performance["overall"]["precision"]})
+        mlflow.log_metrics({"recall": performance["overall"]["recall"]})
+        mlflow.log_metrics({"f1": performance["overall"]["f1"]})
+        mlflow.log_params(vars(artifacts["args"]))
+
+        # Log artifacts
+        with tempfile.TemporaryDirectory() as dp:
+            artifacts["label_encoder"].save(Path(dp, "label_encoder.json"))
+            joblib.dump(artifacts["vectorizer"], Path(dp, "vectorizer.pkl"))
+            joblib.dump(artifacts["model"], Path(dp, "model.pkl"))
+            utils.save_dict(performance, Path(dp, "performance.json"))
+            mlflow.log_artifacts(dp)
+
+    # Save to config
+    open(Path(config.CONFIG_DIR, "run_id.txt"), "w").write(run_id)
+    utils.save_dict(performance, Path(config.CONFIG_DIR, "performance.json"))
+
+
     artifacts = train.train(df=df, args=args)
     performance = artifacts["performance"]
     print(json.dumps(performance, indent=2))
@@ -55,7 +85,7 @@ def optimize(study_name, num_trials):
     df = pd.read_csv(Path(config.DATA_DIR, "labeled_projects.csv"))
 
     # Optimize
-    args = Namespace(**utils.load_dict(filepath=args_fp))
+    # args = Namespace(**utils.load_dict(filepath=args_fp))
     pruner = optuna.pruners.MedianPruner(n_startup_trials=5, n_warmup_steps=5)
     study = optuna.create_study(study_name="optimization", direction="maximize", pruner=pruner)
     mlflow_callback = MLflowCallback(
