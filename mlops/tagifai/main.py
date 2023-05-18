@@ -7,7 +7,7 @@ import pandas as pd
 from config import config
 # import utils
 
-from tagifai import data, train, utils
+from tagifai import data, train, utils,predict
 import joblib
 import tempfile
 
@@ -101,3 +101,35 @@ def optimize(study_name, num_trials):
     utils.save_dict({**args.__dict__, **study.best_trial.params}, args_fp, cls=NumpyEncoder)
     print(f"\nBest value (f1): {study.best_trial.value}")
     print(f"Best hyperparameters: {json.dumps(study.best_trial.params, indent=2)}")
+
+
+def predict_tag(text, run_id=None):
+    """Predict tag for text."""
+    if not run_id:
+        run_id = open(Path(config.CONFIG_DIR, "run_id.txt")).read()
+    artifacts = load_artifacts(run_id=run_id)
+    prediction = predict.predict(texts=[text], artifacts=artifacts)
+    print(json.dumps(prediction, indent=2))
+    return prediction
+
+# tagifai/main.py
+def load_artifacts(run_id):
+    """Load artifacts for a given run_id."""
+    # Locate specifics artifacts directory
+    experiment_id = mlflow.get_run(run_id=run_id).info.experiment_id
+    artifacts_dir = Path(config.MODEL_REGISTRY, experiment_id, run_id, "artifacts")
+
+    # Load objects from run
+    args = Namespace(**utils.load_dict(filepath=Path(artifacts_dir, "args.json")))
+    vectorizer = joblib.load(Path(artifacts_dir, "vectorizer.pkl"))
+    label_encoder = data.LabelEncoder.load(fp=Path(artifacts_dir, "label_encoder.json"))
+    model = joblib.load(Path(artifacts_dir, "model.pkl"))
+    performance = utils.load_dict(filepath=Path(artifacts_dir, "performance.json"))
+
+    return {
+        "args": args,
+        "label_encoder": label_encoder,
+        "vectorizer": vectorizer,
+        "model": model,
+        "performance": performance
+    }
