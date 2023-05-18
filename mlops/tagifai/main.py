@@ -5,7 +5,9 @@ from argparse import Namespace
 from pathlib import Path
 import pandas as pd
 from config import config
-from tagifai import utils
+# import utils
+
+from tagifai import data, train, utils
 
 warnings.filterwarnings("ignore")
 
@@ -26,9 +28,6 @@ def elt_data():
 
 # tagifai/main.py
 import json
-
-from tagifai import data, train, utils
-
 
 def train_model(args_fp):
     """Train a model given arguments."""
