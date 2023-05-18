@@ -1,0 +1,6 @@
+ERROR 2023-05-19 00:40:00,769 [root:config.py:<module>:88]
+There's been a mistake with the process.
+
+CRITICAL 2023-05-19 00:40:00,770 [root:config.py:<module>:89]
+There is something terribly wrong and process may terminate.
+

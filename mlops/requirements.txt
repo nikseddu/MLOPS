@@ -9,3 +9,4 @@ snorkel==0.9.8
 mlflow==1.23.1
 numpyencoder==0.3.0
 optuna==2.10.0
+rich==12.4.4
