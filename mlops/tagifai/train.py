@@ -7,9 +7,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import SGDClassifier
 from sklearn.metrics import log_loss
 import optuna
-import mlflow
+# import mlflow
 
-from tagifai import data, predict, utils
+from tagifai import data, predict, utils,evaluate
 
 def train(args, df, trial=None):
     """Train model on data."""
@@ -18,7 +18,7 @@ def train(args, df, trial=None):
     utils.set_seeds()
     if args.shuffle: df = df.sample(frac=1).reset_index(drop=True)
     df = df[: args.subset]  # None = all samples
-    df = data.preprocess(df, lower=args.lower, stem=args.stem)
+    df = data.preprocess(df, lower=args.lower, stem=args.stem,min_freq=args.min_freq)
     label_encoder = data.LabelEncoder().fit(df.tag)
     X_train, X_val, X_test, y_train, y_val, y_test = \
         data.get_data_splits(X=df.text.to_numpy(), y=label_encoder.encode(df.tag))

@@ -12,7 +12,6 @@ import numpy as np
 
 
 
-
 def preprocess(df, lower, stem, min_freq):
     """Preprocess the data."""
     df["text"] = df.title + " " + df.description  # feature engineering
@@ -51,8 +50,9 @@ def clean_text(text, lower=True, stem=False, stopwords=config.STOPWORDS):
     # Remove links
     text = re.sub(r"http\S+", "", text)
 
-    # Stemming
+    # Stemminge
     if stem:
+        stemmer=PorterStemmer()
         text = " ".join([stemmer.stem(word, to_lowercase=lower) for word in text.split(" ")])
 
     return text
