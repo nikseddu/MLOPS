@@ -4,6 +4,8 @@ import re
 
 from config import config
 
+from collections import Counter
+
 
 
 def preprocess(df, lower, stem, min_freq):
@@ -49,3 +51,19 @@ def clean_text(text, lower=True, stem=False, stopwords=config.STOPWORDS):
         text = " ".join([stemmer.stem(word, to_lowercase=lower) for word in text.split(" ")])
 
     return text
+
+
+
+def replace_oos_labels(df, labels, label_col, oos_label="other"):
+    """Replace out of scope (oos) labels."""
+    oos_tags = [item for item in df[label_col].unique() if item not in labels]
+    df[label_col] = df[label_col].apply(lambda x: oos_label if x in oos_tags else x)
+    return df
+
+def replace_minority_labels(df, label_col, min_freq, new_label="other"):
+    """Replace minority labels with another label."""
+    labels = Counter(df[label_col].values)
+    labels_above_freq = Counter(label for label in labels.elements() if (labels[label] >= min_freq))
+    df[label_col] = df[label_col].apply(lambda label: label if label in labels_above_freq else None)
+    df[label_col] = df[label_col].fillna(new_label)
+    return df

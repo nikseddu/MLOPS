@@ -9,3 +9,14 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)
 # Assets
 PROJECTS_URL = "https://raw.githubusercontent.com/GokuMohandas/Made-With-ML/main/datasets/projects.csv"
 TAGS_URL = "https://raw.githubusercontent.com/GokuMohandas/Made-With-ML/main/datasets/tags.csv"
+
+# config/config.py
+STOPWORDS = [   "i",
+    "me",
+    "my",
+   
+    "won't",
+    "wouldn",
+    "wouldn't"]
+
+
