@@ -13,8 +13,6 @@ from tagifai import data, predict, train, utils
 
 # import utils  
 
-
-
 warnings.filterwarnings("ignore")
 
 
