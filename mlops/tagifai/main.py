@@ -11,11 +11,16 @@ import pandas as pd
 from config import config
 from tagifai import data, predict, train, utils
 
+
+import typer
+app = typer.Typer()
+
+
 # import utils  
 
 warnings.filterwarnings("ignore")
 
-
+@app.command()
 def elt_data():
     """Extract, load and transform our data assets."""
     # Extract + Load
@@ -35,7 +40,7 @@ def elt_data():
 # tagifai/main.py
 import json
 
-
+@app.command()
 def train_model(args_fp, experiment_name, run_name):
     """Train a model given arguments."""
     # Load labeled data
@@ -81,7 +86,7 @@ import optuna
 from numpyencoder import NumpyEncoder
 from optuna.integration.mlflow import MLflowCallback
 
-
+@app.command()
 def optimize(study_name, num_trials):
     """Optimize hyperparameters."""
     # Load labeled data
@@ -105,8 +110,8 @@ def optimize(study_name, num_trials):
     print(f"\nBest value (f1): {study.best_trial.value}")
     print(f"Best hyperparameters: {json.dumps(study.best_trial.params, indent=2)}")
 
-
-def predict_tag(text, run_id=None):
+@app.command()
+def predict_tag(text: str = "", run_id: str = None):
     """Predict tag for text."""
     if not run_id:
         run_id = open(Path(config.CONFIG_DIR, "run_id.txt")).read()
@@ -117,6 +122,7 @@ def predict_tag(text, run_id=None):
 
 
 # tagifai/main.py
+@app.command()
 def load_artifacts(run_id):
     """Load artifacts for a given run_id."""
     # Locate specifics artifacts directory

@@ -10,3 +10,15 @@ There's been a mistake with the process.
 CRITICAL 2023-05-19 00:40:00,770 [root:config.py:<module>:89]
 There is something terribly wrong and process may terminate.
 
+INFO 2023-05-19 20:37:31,507 [root:config.py:<module>:89]
+Informative messages from your code.
+
+WARNING 2023-05-19 20:37:31,512 [root:config.py:<module>:90]
+Everything works but there is something to be aware of.
+
+ERROR 2023-05-19 20:37:31,513 [root:config.py:<module>:91]
+There's been a mistake with the process.
+
+CRITICAL 2023-05-19 20:37:31,515 [root:config.py:<module>:92]
+There is something terribly wrong and process may terminate.
+
