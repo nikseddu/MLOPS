@@ -10,6 +10,13 @@ with open(Path(BASE_DIR,"requirements.txt"),"r") as file:
 
 #setup
 
+# setup.py
+docs_packages = [
+    "mkdocs==1.3.0",
+    "mkdocstrings==0.18.1"
+]
+
+
 setup(
     name='tagifai',
     version='0.1',
@@ -17,7 +24,11 @@ setup(
     author="Nikhil",
     url="https://nikseddu.github.io",
     python_requires=">=3.7",
-    install_requires=[required_packages]
+    install_requires=[required_packages],
+    extras_require={
+        "dev": docs_packages,
+        "docs": docs_packages,
+    },
 
 
 )
