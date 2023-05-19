@@ -1,6 +1,7 @@
 # tagifai/predict.py
 import numpy as np
 
+
 def custom_predict(y_prob, threshold, index):
     """Custom predict function that defaults
     to an index if conditions are not met."""
@@ -14,7 +15,8 @@ def predict(texts, artifacts):
     y_pred = custom_predict(
         y_prob=artifacts["model"].predict_proba(x),
         threshold=artifacts["args"].threshold,
-        index=artifacts["label_encoder"].class_to_index["other"])
+        index=artifacts["label_encoder"].class_to_index["other"],
+    )
     tags = artifacts["label_encoder"].decode(y_pred)
     predictions = [
         {

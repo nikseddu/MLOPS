@@ -1,19 +1,22 @@
 # tagifai/main.py
 import logging
+import tempfile
 import warnings
 from argparse import Namespace
 from pathlib import Path
-import pandas as pd
-from config import config
-# import utils
 
-from tagifai import data, train, utils,predict
 import joblib
-import tempfile
+import pandas as pd
+
+from config import config
+from tagifai import data, predict, train, utils
+
+# import utils
 
 
 
 warnings.filterwarnings("ignore")
+
 
 def elt_data():
     """Extract, load and transform our data assets."""
@@ -30,10 +33,12 @@ def elt_data():
 
     # logger.info("✅ Saved data!")
 
+
 # tagifai/main.py
 import json
 
-def train_model(args_fp,experiment_name, run_name):
+
+def train_model(args_fp, experiment_name, run_name):
     """Train a model given arguments."""
     # Load labeled data
     df = pd.read_csv(Path(config.DATA_DIR, "labeled_projects.csv"))
@@ -67,7 +72,6 @@ def train_model(args_fp,experiment_name, run_name):
     open(Path(config.CONFIG_DIR, "run_id.txt"), "w").write(run_id)
     utils.save_dict(performance, Path(config.CONFIG_DIR, "performance.json"))
 
-
     artifacts = train.train(df=df, args=args)
     performance = artifacts["performance"]
     print(json.dumps(performance, indent=2))
@@ -75,9 +79,10 @@ def train_model(args_fp,experiment_name, run_name):
 
 # tagifai/main.py
 import mlflow
-from numpyencoder import NumpyEncoder
 import optuna
+from numpyencoder import NumpyEncoder
 from optuna.integration.mlflow import MLflowCallback
+
 
 def optimize(study_name, num_trials):
     """Optimize hyperparameters."""
@@ -88,12 +93,12 @@ def optimize(study_name, num_trials):
     # args = Namespace(**utils.load_dict(filepath=args_fp))
     pruner = optuna.pruners.MedianPruner(n_startup_trials=5, n_warmup_steps=5)
     study = optuna.create_study(study_name="optimization", direction="maximize", pruner=pruner)
-    mlflow_callback = MLflowCallback(
-        tracking_uri=mlflow.get_tracking_uri(), metric_name="f1")
+    mlflow_callback = MLflowCallback(tracking_uri=mlflow.get_tracking_uri(), metric_name="f1")
     study.optimize(
         lambda trial: train.objective(args, df, trial),
         n_trials=num_trials,
-        callbacks=[mlflow_callback])
+        callbacks=[mlflow_callback],
+    )
 
     # Best trial
     trials_df = study.trials_dataframe()
@@ -111,6 +116,7 @@ def predict_tag(text, run_id=None):
     prediction = predict.predict(texts=[text], artifacts=artifacts)
     print(json.dumps(prediction, indent=2))
     return prediction
+
 
 # tagifai/main.py
 def load_artifacts(run_id):
@@ -131,5 +137,5 @@ def load_artifacts(run_id):
         "label_encoder": label_encoder,
         "vectorizer": vectorizer,
         "model": model,
-        "performance": performance
+        "performance": performance,
     }
