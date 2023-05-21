@@ -31,7 +31,7 @@ setup(
     python_requires=">=3.7",
     install_requires=[required_packages],
     extras_require={
-        "dev": docs_packages + style_packages + test_packages,
+        "dev": docs_packages + style_packages + test_packages + ["pre-commit==2.19.0"],
         "docs": docs_packages,
         "test":test_packages
     },
