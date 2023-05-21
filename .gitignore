@@ -2,3 +2,8 @@
 #Virtual environment
 mlops/venv/
 *.pyc
+
+
+mlops/logs/
+mlops/stores/
+# mlops/data/

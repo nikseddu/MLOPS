@@ -115,3 +115,12 @@ Waiting for application startup.
 INFO 2023-05-21 12:47:14,163 [uvicorn.error:on.py:startup:59]
 Application startup complete.
 
+INFO 2023-05-21 22:44:32,964 [uvicorn.error:server.py:serve:75]
+Started server process [792]
+
+INFO 2023-05-21 22:44:32,974 [uvicorn.error:on.py:startup:45]
+Waiting for application startup.
+
+INFO 2023-05-21 22:44:32,978 [uvicorn.error:on.py:startup:59]
+Application startup complete.
+

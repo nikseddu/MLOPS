@@ -33,6 +33,12 @@ mlflow.set_tracking_uri("file://" + str(MODEL_REGISTRY.absolute()))
 LOGS_DIR = Path(BASE_DIR, "logs")
 LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
+
+# Inside config/config.py
+BLOB_STORE = Path(STORES_DIR, "blob")
+BLOB_STORE.mkdir(parents=True, exist_ok=True)
+
+
 # config/config.py
 import logging
 import sys
