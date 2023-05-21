@@ -10,6 +10,10 @@ with open(Path(BASE_DIR, "requirements.txt"), "r") as file:
 
 
 # setup
+# setup.py
+test_packages = [
+    "pytest==7.1.2",
+]
 
 # setup.py
 docs_packages = ["mkdocs==1.3.0", "mkdocstrings==0.18.1"]
@@ -25,7 +29,8 @@ setup(
     python_requires=">=3.7",
     install_requires=[required_packages],
     extras_require={
-        "dev": docs_packages + style_packages,
+        "dev": docs_packages + style_packages + test_packages,
         "docs": docs_packages,
+        "test":test_packages
     },
 )

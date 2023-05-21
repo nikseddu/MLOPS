@@ -60,3 +60,16 @@ def _index(request: Request) -> Dict:
         "data": {},
     }
     return response
+
+@app.get("/performance", tags=["Performance"])
+@construct_response
+def _performance(request: Request, filter: str = None) -> Dict:
+    """Get the performance metrics."""
+    performance = artifacts["performance"]
+    data = {"performance":performance.get(filter, performance)}
+    response = {
+        "message": HTTPStatus.OK.phrase,
+        "status-code": HTTPStatus.OK,
+        "data": data,
+    }
+    return response
