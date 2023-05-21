@@ -13,6 +13,8 @@ with open(Path(BASE_DIR, "requirements.txt"), "r") as file:
 # setup.py
 test_packages = [
     "pytest==7.1.2",
+    "pytest-cov==2.10.1",
+    "great-expectations==0.15.15"
 ]
 
 # setup.py
