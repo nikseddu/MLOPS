@@ -1,7 +1,7 @@
 from pathlib import Path
 
 # tagifai/config.py
-import pretty_errors  # NOQA: F401 (imported but unused)
+# import pretty_errors  # NOQA: F401 (imported but unused)
 
 BASE_DIR = Path(__file__).parent.parent.absolute()
 CONFIG_DIR = Path(BASE_DIR, "Config")

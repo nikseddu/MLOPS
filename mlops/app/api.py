@@ -21,12 +21,12 @@ app =  FastAPI(title="TagiFai",
                version="0.1")
 
 
-@app.on_event("startup")
-def load_artifacts():
-    global artifacts
-    run_id = open(Path(config.CONFIG_DIR, "run_id.txt")).read()
-    artifacts = main.load_artifacts(model_dir=config.MODEL_DIR)
-    logger.info("Ready for inference!")
+# @app.on_event("startup")
+# def load_artifacts():
+#     global artifacts
+#     run_id = open(Path(config.CONFIG_DIR, "run_id.txt")).read()
+#     artifacts = main.load_artifacts(model_dir=config.MODEL_DIR)
+#     logger.info("Ready for inference!")
 
 
 
@@ -47,10 +47,10 @@ def construct_response(f):
             response["data"] = results["data"]
         return response
 
-    return 
+    return wrap
 
 
-@app.get("/")
+@app.get("/",tags=["General"])
 @construct_response
 def _index(request: Request) -> Dict:
     """Health check."""

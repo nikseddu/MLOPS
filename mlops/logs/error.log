@@ -10,3 +10,51 @@ There's been a mistake with the process.
 CRITICAL 2023-05-19 20:37:31,515 [root:config.py:<module>:92]
 There is something terribly wrong and process may terminate.
 
+ERROR 2023-05-21 11:08:42,243 [uvicorn.error:on.py:send:119]
+Traceback (most recent call last):
+  File "C:\Users\ACER\AppData\Local\Programs\Python\Python39\lib\site-packages\starlette\routing.py", line 635, in lifespan
+    async with self.lifespan_context(app):
+  File "C:\Users\ACER\AppData\Local\Programs\Python\Python39\lib\site-packages\starlette\routing.py", line 530, in __aenter__
+    await self._router.startup()
+  File "C:\Users\ACER\AppData\Local\Programs\Python\Python39\lib\site-packages\starlette\routing.py", line 614, in startup
+    handler()
+  File "D:\Grind\MLOPS\mlops\.\app\api.py", line 27, in load_artifacts
+    run_id = open(Path(config.CONFIG_DIR, "run_id.txt")).read()
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\Grind\\MLOPS\\mlops\\Config\\run_id.txt'
+
+
+ERROR 2023-05-21 11:08:42,291 [uvicorn.error:on.py:startup:56]
+Application startup failed. Exiting.
+
+ERROR 2023-05-21 11:08:57,863 [uvicorn.error:on.py:send:119]
+Traceback (most recent call last):
+  File "C:\Users\ACER\AppData\Local\Programs\Python\Python39\lib\site-packages\starlette\routing.py", line 635, in lifespan
+    async with self.lifespan_context(app):
+  File "C:\Users\ACER\AppData\Local\Programs\Python\Python39\lib\site-packages\starlette\routing.py", line 530, in __aenter__
+    await self._router.startup()
+  File "C:\Users\ACER\AppData\Local\Programs\Python\Python39\lib\site-packages\starlette\routing.py", line 614, in startup
+    handler()
+  File "D:\Grind\MLOPS\mlops\.\app\api.py", line 27, in load_artifacts
+    run_id = open(Path(config.CONFIG_DIR, "run_id.txt")).read()
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\Grind\\MLOPS\\mlops\\Config\\run_id.txt'
+
+
+ERROR 2023-05-21 11:08:57,903 [uvicorn.error:on.py:startup:56]
+Application startup failed. Exiting.
+
+ERROR 2023-05-21 11:09:21,217 [uvicorn.error:on.py:send:119]
+Traceback (most recent call last):
+  File "C:\Users\ACER\AppData\Local\Programs\Python\Python39\lib\site-packages\starlette\routing.py", line 635, in lifespan
+    async with self.lifespan_context(app):
+  File "C:\Users\ACER\AppData\Local\Programs\Python\Python39\lib\site-packages\starlette\routing.py", line 530, in __aenter__
+    await self._router.startup()
+  File "C:\Users\ACER\AppData\Local\Programs\Python\Python39\lib\site-packages\starlette\routing.py", line 614, in startup
+    handler()
+  File "D:\Grind\MLOPS\mlops\.\app\api.py", line 27, in load_artifacts
+    run_id = open(Path(config.CONFIG_DIR, "run_id.txt")).read()
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\Grind\\MLOPS\\mlops\\Config\\run_id.txt'
+
+
+ERROR 2023-05-21 11:09:21,249 [uvicorn.error:on.py:startup:56]
+Application startup failed. Exiting.
+
